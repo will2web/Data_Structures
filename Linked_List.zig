@@ -24,6 +24,9 @@ fn createNode(node_value: u8, node_pointer: usize) !Node {
     return new_Node;
 }
 
+fn firstNode() !void {}
+//returns 1st node (so it needs to be save somewhere...)
+
 fn insertNode() !void {}
 // Insertion: Adding a new node to the list, either at the beginning, end, or a specific position.
 
