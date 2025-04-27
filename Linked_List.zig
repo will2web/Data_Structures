@@ -16,7 +16,9 @@ pub fn main() !void {
     //call createLinkedList using that value
     const Node1 = createNode(87, null);
     debug_print("Node1: {any}\n\n", .{Node1});
-    debug_print("@typeInfo(Node1) {any}", .{@typeInfo(Node1)});
+    //debug_print("@typeInfo(Node1) {any}", .{@typeInfo(Node1)});
+    debug_print("@typeInfo(Node1) {any}", .{@typeInfo(Node)});
+    //debug_print("@Type(Node1) {any}", .{@Type(Node1)});
     //    try debug_print("value1: {d}", .{Node1.value});
     //try debug_print("next_node_pointer: {any}", .{Node1.next_node_pointer});
 
