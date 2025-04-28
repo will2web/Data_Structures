@@ -8,30 +8,74 @@ const Node = struct {
 };
 
 pub fn main() !void {
+    var head_Node: Node = undefined;
     var Node1: Node = .{ .value = 87, .next_node_pointer = null };
+    //TRACK HEAD NODE
+    head_Node = Node1;
     var Node2: Node = .{ .value = 17, .next_node_pointer = &Node1 };
+    head_Node = Node2;
     var Node3: Node = .{ .value = 3, .next_node_pointer = &Node2 };
+    head_Node = Node3;
     // debug_print("Node3: {any}\n", .{Node3});
     var Node4: Node = .{ .value = 23, .next_node_pointer = &Node3 };
+    head_Node = Node4;
     // debug_print("Node4: {any}\n", .{Node4});
     var Node5: Node = .{ .value = 9, .next_node_pointer = &Node4 };
+    head_Node = Node5;
+    _ = &Node5; //discarding "local variable is never mutated"
     // debug_print("Node5: {any}\n", .{Node5});
 
-    var while_loop_pointer: ?*Node = &Node5;
-    debug_print("while_loop_pointer: {any}\n", .{while_loop_pointer});
-    debug_print("while_loop_pointer: {any}\n", .{while_loop_pointer.?.value});
-    // //while (@field(while_loop_pointer, "next_node_pointer")) {
+    //WILL DELETE if below head node version works
+    // var while_loop_pointer: ?*Node = &Node5;
+    // // debug_print("while_loop_pointer: {any}\n", .{while_loop_pointer});
+    // // debug_print("while_loop_pointer: {any}\n", .{while_loop_pointer.?.value});
+
+    // while (while_loop_pointer != null) {
+    //     debug_print("while_loop_pointer.?.value: {any}\n", .{while_loop_pointer.?.value});
+    //     while_loop_pointer = while_loop_pointer.?.next_node_pointer;
+    // }
+
+    var while_loop_pointer: ?*Node = &head_Node;
+    var position: u8 = 0;
     while (while_loop_pointer != null) {
-        debug_print("while_loop_pointer.?.value: {any}\n", .{while_loop_pointer.?.value});
+        position += 1;
+        debug_print("Element {d}: {d}\n", .{ position, while_loop_pointer.?.value });
         while_loop_pointer = while_loop_pointer.?.next_node_pointer;
     }
 
-    //debug_print("@TypeOf(Node1) {any}", .{@TypeOf(Node)});
+    // debug_print("@TypeOf(Node1) {any}\n", .{@TypeOf(Node1)});
+    // debug_print("@TypeOf(Node1.next_node_pointer) {any}\n", .{@TypeOf(Node1.next_node_pointer)});
+    // debug_print("@TypeOf(Node1.value) {any}\n", .{@TypeOf(Node1.value)});
+
+    //FIND NODE BY POSITION
+    //ASK user which they want to find (keep track of LinkedList length & confine user input to
+    //  existing values, and share message if error)
+    //FIND 3rd node
+    while_loop_pointer = &head_Node;
+    position = 0;
+    while (while_loop_pointer != null) {
+        position += 1;
+        if (position == 3) {
+            break;
+        }
+
+        while_loop_pointer = while_loop_pointer.?.next_node_pointer;
+    }
+    debug_print("Element {d}: {d}\n", .{ position, while_loop_pointer.?.value });
+
+    //FIND NODE BY VALUE
+    //INSERT NODE BY POSITION
+    //INSERT NODE BY VALUE
+    //DELETE NODE BY POSITION
+    //DELETE NODE BY VALUE
+
+    //debug_print("@typeInfo(Node1.next_node_pointer) {any}", .{@typeInfo(Node1.next_node_pointer)}); //"error: "Unable to evaluate comptime expression"
+    //debug_print("@Type(Node1.next_node_pointer) {any}", .{@Type(Node1.next_node_pointer)}); //"error: expected type 'builtin.Type', found '?*Linked_List.Node'"
+    //debug_print("@Type(Node1.value) {any}", .{@Type(Node1.value)}); //"error: expected type 'builtin.Type', found '?*Linked_List.Node'"
+
     //(in later versions) ask user 1st value
     //call createLinkedList using that value
     //const Node1 = createNode(87, null); //might be used when I break code into functions
-
-    //debug_print("@typeInfo(Node1) {any}", .{@type_Name(Node1)});
 
     //debug_print("@Type(Node1) {any}", .{@Type(Node1)});
     //    try debug_print("value1: {d}", .{Node1.value});
