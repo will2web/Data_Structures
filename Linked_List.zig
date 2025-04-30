@@ -25,16 +25,6 @@ pub fn main() !void {
     _ = &Node5; //discarding "local variable is never mutated"
     // debug_print("Node5: {any}\n", .{Node5});
 
-    //WILL DELETE if below head node version works
-    // var while_loop_pointer: ?*Node = &Node5;
-    // // debug_print("while_loop_pointer: {any}\n", .{while_loop_pointer});
-    // // debug_print("while_loop_pointer: {any}\n", .{while_loop_pointer.?.value});
-
-    // while (while_loop_pointer != null) {
-    //     debug_print("while_loop_pointer.?.value: {any}\n", .{while_loop_pointer.?.value});
-    //     while_loop_pointer = while_loop_pointer.?.next_node_pointer;
-    // }
-
     var while_loop_pointer: ?*Node = &head_Node;
     var position: u8 = 0;
     while (while_loop_pointer != null) {
@@ -64,6 +54,25 @@ pub fn main() !void {
     debug_print("Element {d}: {d}\n", .{ position, while_loop_pointer.?.value });
 
     //FIND NODE BY VALUE
+    while_loop_pointer = &head_Node;
+    const value: i8 = 87;
+    position = 0;
+    while (while_loop_pointer != null) {
+        position += 1;
+        if (while_loop_pointer.?.value == value) {
+            break;
+        }
+
+        while_loop_pointer = while_loop_pointer.?.next_node_pointer;
+    }
+    if (while_loop_pointer == null) {
+        debug_print("Sorry, your value wasn't found\n", .{});
+    } else {
+        debug_print("Your value {d} was found at position {d}\n", .{ value, position });
+    }
+
+    //debug_print("Element {d}: {d}\n", .{ position, while_loop_pointer.?.value });
+
     //INSERT NODE BY POSITION
     //INSERT NODE BY VALUE
     //DELETE NODE BY POSITION
