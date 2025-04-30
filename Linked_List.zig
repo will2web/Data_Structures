@@ -2,7 +2,7 @@ const std = @import("std");
 const debug_print = std.debug.print;
 
 const Node = struct {
-    value: u8,
+    value: i8,
     //Should next node pointer point to a node, or another pointer?
     next_node_pointer: ?*Node,
 };
@@ -25,6 +25,7 @@ pub fn main() !void {
     _ = &Node5; //discarding "local variable is never mutated"
     // debug_print("Node5: {any}\n", .{Node5});
 
+    //Print linked list
     var while_loop_pointer: ?*Node = &head_Node;
     var position: u8 = 0;
     while (while_loop_pointer != null) {
@@ -55,7 +56,7 @@ pub fn main() !void {
 
     //FIND NODE BY VALUE
     while_loop_pointer = &head_Node;
-    const value: i8 = 87;
+    var value: i8 = 87;
     position = 0;
     while (while_loop_pointer != null) {
         position += 1;
@@ -74,8 +75,35 @@ pub fn main() !void {
     //debug_print("Element {d}: {d}\n", .{ position, while_loop_pointer.?.value });
 
     //INSERT NODE BY POSITION
-    //INSERT NODE BY VALUE
+    //POSITION 4
+    while_loop_pointer = &head_Node;
+    position = 0;
+    const goal_position = 4;
+    while (while_loop_pointer != null) {
+        position += 1;
+        if (position == goal_position - 1) {
+            break;
+        }
+
+        while_loop_pointer = while_loop_pointer.?.next_node_pointer;
+    }
+    value = while_loop_pointer.?.value;
+    debug_print("current position is {d} & current value is {d}\n", .{ position, value });
+    var inserted_Node: Node = .{ .value = -4, .next_node_pointer = while_loop_pointer.?.next_node_pointer };
+    while_loop_pointer.?.next_node_pointer = &inserted_Node;
+
+    //Print linked list
+    while_loop_pointer = &head_Node;
+    position = 0;
+    while (while_loop_pointer != null) {
+        position += 1;
+        debug_print("Element {d}: {d}\n", .{ position, while_loop_pointer.?.value });
+        while_loop_pointer = while_loop_pointer.?.next_node_pointer;
+    }
+
     //DELETE NODE BY POSITION
+    //ORDER NODES
+    //INSERT NODE BY VALUE
     //DELETE NODE BY VALUE
 
     //debug_print("@typeInfo(Node1.next_node_pointer) {any}", .{@typeInfo(Node1.next_node_pointer)}); //"error: "Unable to evaluate comptime expression"
