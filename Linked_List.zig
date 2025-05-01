@@ -78,7 +78,7 @@ pub fn main() !void {
     //POSITION 4
     while_loop_pointer = &head_Node;
     position = 0;
-    const goal_position = 4;
+    var goal_position: i8 = 4;
     while (while_loop_pointer != null) {
         position += 1;
         if (position == goal_position - 1) {
@@ -102,9 +102,84 @@ pub fn main() !void {
     }
 
     //DELETE NODE BY POSITION
+    //POSITION 2
+    while_loop_pointer = &head_Node;
+    position = 0;
+    goal_position = 2;
+    while (while_loop_pointer != null) {
+        position += 1;
+        if (position == goal_position - 1) {
+            break;
+        }
+
+        while_loop_pointer = while_loop_pointer.?.next_node_pointer;
+    }
+    value = while_loop_pointer.?.value;
+    debug_print("\ncurrent position is {d} & current value is {d}\n", .{ position, value });
+    const deleted_Node: ?*Node = while_loop_pointer.?.next_node_pointer;
+    debug_print("Node to deleted value is {d}\n", .{deleted_Node.?.value});
+    while_loop_pointer.?.next_node_pointer = deleted_Node.?.next_node_pointer;
+
+    //Print linked list
+    while_loop_pointer = &head_Node;
+    position = 0;
+    while (while_loop_pointer != null) {
+        position += 1;
+        debug_print("Element {d}: {d}\t\t", .{ position, while_loop_pointer.?.value });
+        debug_print("Address {d}: {*}\n", .{ position, while_loop_pointer });
+        while_loop_pointer = while_loop_pointer.?.next_node_pointer;
+    }
+    //SPECIAL CASE DELETE NODE BY POSITION: DELETING HEAD NODE
+    //Can I use pointer arithemetic?
+
+    //need to print out linkedlist addresses
+
     //ORDER NODES
+    //using bubble sort for simplicity
+    //Pseudo Code
+    while_loop_pointer = &head_Node;
+    debug_print("\nCurrent value is {d}\t\t", .{while_loop_pointer.?.value});
+    debug_print("Next value is {d}\n", .{while_loop_pointer.?.next_node_pointer.?.value});
+
+    var placeholder_Node: ?*Node = undefined;
+    var subsequent_Node: ?*Node = undefined;
+    //while (while_loop_pointer != null) {  //might need to use "while_loop_pointer.?.next_node_pointer" instead to avoid null, same thing happens in bubble sort file
+    //if (while_loop_pointer.?.value > while_loop_pointer.?.next_node_pointer.?.value)
+
+    while_loop_pointer = &head_Node;
+    position = 0;
+    subsequent_Node = while_loop_pointer.?.next_node_pointer;
+
+    if (while_loop_pointer == &head_Node) { //ONLY for head node
+        placeholder_Node = &head_Node;
+        head_Node = subsequent_Node.?.*;
+        while_loop_pointer.?.next_node_pointer = placeholder_Node;
+    }
+
+    while_loop_pointer = &head_Node;
+    position = 0;
+    debug_print("\nCurrent value is {d}\t\t", .{while_loop_pointer.?.value});
+    debug_print("Current Address is {*}\n", .{while_loop_pointer});
+
+    debug_print("Next value is {d}\t\t", .{while_loop_pointer.?.next_node_pointer.?.value});
+    debug_print("Next Address is {*}\n", .{while_loop_pointer.?.next_node_pointer});
+    //Print linked list
+    // while_loop_pointer = &head_Node;
+    // position = 0;
+    // while (while_loop_pointer != null) {
+    //     position += 1;
+    //     debug_print("Element {d}: {d}\t\t", .{ position, while_loop_pointer.?.value });
+    //     debug_print("Address {d}: {*}\n", .{ position, while_loop_pointer });
+    //     while_loop_pointer = while_loop_pointer.?.next_node_pointer;
+    // }
+
     //INSERT NODE BY VALUE
+    //(If list is not in order, calls order nodes function first)
     //DELETE NODE BY VALUE
+    //(If list is not in order, calls order nodes function first)
+    //MANY SPECIAL/EDGE CASE: Deleting/inserting first or last nodes...
+    //BELOW code might be useful when breaking everything into functions
+    //{
 
     //debug_print("@typeInfo(Node1.next_node_pointer) {any}", .{@typeInfo(Node1.next_node_pointer)}); //"error: "Unable to evaluate comptime expression"
     //debug_print("@Type(Node1.next_node_pointer) {any}", .{@Type(Node1.next_node_pointer)}); //"error: expected type 'builtin.Type', found '?*Linked_List.Node'"
@@ -120,6 +195,7 @@ pub fn main() !void {
 
     // const Node2 = createNode(17, &Node1);
     // debug_print("Node2: {any}", .{Node2});
+    //}
 }
 
 // Create Linked List (basically, Create 1st node)
