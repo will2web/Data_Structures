@@ -125,22 +125,53 @@ pub fn main() !void {
     position = 0;
     while (while_loop_pointer != null) {
         position += 1;
-        debug_print("Element {d}: {d}\n", .{ position, while_loop_pointer.?.value });
+        debug_print("Element {d}: {d}\t\t", .{ position, while_loop_pointer.?.value });
+        debug_print("Address {d}: {*}\n", .{ position, while_loop_pointer });
         while_loop_pointer = while_loop_pointer.?.next_node_pointer;
     }
     //SPECIAL CASE DELETE NODE BY POSITION: DELETING HEAD NODE
     //Can I use pointer arithemetic?
 
+    //need to print out linkedlist addresses
+
     //ORDER NODES
     //using bubble sort for simplicity
     //Pseudo Code
     while_loop_pointer = &head_Node;
-    debug_print("\nCurrent value is {d}\n", .{while_loop_pointer.?.value});
+    debug_print("\nCurrent value is {d}\t\t", .{while_loop_pointer.?.value});
     debug_print("Next value is {d}\n", .{while_loop_pointer.?.next_node_pointer.?.value});
-    //while (while_loop_pointer != null) {  //might need to use "while_loop_pointer.?.next_node_pointer" instead to avoid null, same thing happens in bubble sort file
-    //if (while_loop_pointer) //ONLY for head node
 
-    //
+    var placeholder_Node: ?*Node = undefined;
+    var subsequent_Node: ?*Node = undefined;
+    //while (while_loop_pointer != null) {  //might need to use "while_loop_pointer.?.next_node_pointer" instead to avoid null, same thing happens in bubble sort file
+    //if (while_loop_pointer.?.value > while_loop_pointer.?.next_node_pointer.?.value)
+
+    while_loop_pointer = &head_Node;
+    position = 0;
+    subsequent_Node = while_loop_pointer.?.next_node_pointer;
+
+    if (while_loop_pointer == &head_Node) { //ONLY for head node
+        placeholder_Node = &head_Node;
+        head_Node = subsequent_Node.?.*;
+        while_loop_pointer.?.next_node_pointer = placeholder_Node;
+    }
+
+    while_loop_pointer = &head_Node;
+    position = 0;
+    debug_print("\nCurrent value is {d}\t\t", .{while_loop_pointer.?.value});
+    debug_print("Current Address is {*}\n", .{while_loop_pointer});
+
+    debug_print("Next value is {d}\t\t", .{while_loop_pointer.?.next_node_pointer.?.value});
+    debug_print("Next Address is {*}\n", .{while_loop_pointer.?.next_node_pointer});
+    //Print linked list
+    // while_loop_pointer = &head_Node;
+    // position = 0;
+    // while (while_loop_pointer != null) {
+    //     position += 1;
+    //     debug_print("Element {d}: {d}\t\t", .{ position, while_loop_pointer.?.value });
+    //     debug_print("Address {d}: {*}\n", .{ position, while_loop_pointer });
+    //     while_loop_pointer = while_loop_pointer.?.next_node_pointer;
+    // }
 
     //INSERT NODE BY VALUE
     //(If list is not in order, calls order nodes function first)
