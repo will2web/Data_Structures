@@ -8,27 +8,26 @@ const Node = struct {
 };
 
 pub fn main() !void {
-    var head_Node: ?*Node = undefined;
+    var head_Node: Node = undefined;
     var Node1: Node = .{ .value = 87, .next_node_pointer = null };
     //TRACK HEAD NODE
-    head_Node = &Node1;
+    head_Node = Node1;
     var Node2: Node = .{ .value = 17, .next_node_pointer = &Node1 };
-    head_Node = &Node2;
+    head_Node = Node2;
     var Node3: Node = .{ .value = 3, .next_node_pointer = &Node2 };
-    head_Node = &Node3;
+    head_Node = Node3;
     // debug_print("Node3: {any}\n", .{Node3});
     var Node4: Node = .{ .value = 23, .next_node_pointer = &Node3 };
-    head_Node = &Node4;
+    head_Node = Node4;
     // debug_print("Node4: {any}\n", .{Node4});
     var Node5: Node = .{ .value = 9, .next_node_pointer = &Node4 };
-    head_Node = &Node5;
-
+    head_Node = Node5;
+    _ = &Node5; //discarding "local variable is never mutated"
     // debug_print("Node5: {any}\n", .{Node5});
 
     //Print linked list
-    var while_loop_pointer: ?*Node = head_Node;
+    var while_loop_pointer: ?*Node = &head_Node;
     var position: u8 = 0;
-    debug_print("\n", .{});
     while (while_loop_pointer != null) {
         position += 1;
         debug_print("Element {d}: {d}\n", .{ position, while_loop_pointer.?.value });
@@ -43,9 +42,8 @@ pub fn main() !void {
     //ASK user which they want to find (keep track of LinkedList length & confine user input to
     //  existing values, and share message if error)
     //FIND 3rd node
-    while_loop_pointer = head_Node;
+    while_loop_pointer = &head_Node;
     position = 0;
-
     while (while_loop_pointer != null) {
         position += 1;
         if (position == 3) {
@@ -57,10 +55,9 @@ pub fn main() !void {
     debug_print("Element {d}: {d}\n", .{ position, while_loop_pointer.?.value });
 
     //FIND NODE BY VALUE
-    while_loop_pointer = head_Node;
+    while_loop_pointer = &head_Node;
     var value: i8 = 87;
     position = 0;
-
     while (while_loop_pointer != null) {
         position += 1;
         if (while_loop_pointer.?.value == value) {
@@ -79,10 +76,9 @@ pub fn main() !void {
 
     //INSERT NODE BY POSITION
     //POSITION 4
-    while_loop_pointer = head_Node;
+    while_loop_pointer = &head_Node;
     position = 0;
     var goal_position: i8 = 4;
-
     while (while_loop_pointer != null) {
         position += 1;
         if (position == goal_position - 1) {
@@ -97,9 +93,8 @@ pub fn main() !void {
     while_loop_pointer.?.next_node_pointer = &inserted_Node;
 
     //Print linked list
-    while_loop_pointer = head_Node;
+    while_loop_pointer = &head_Node;
     position = 0;
-    debug_print("\n", .{});
     while (while_loop_pointer != null) {
         position += 1;
         debug_print("Element {d}: {d}\n", .{ position, while_loop_pointer.?.value });
@@ -108,7 +103,7 @@ pub fn main() !void {
 
     //DELETE NODE BY POSITION
     //POSITION 2
-    while_loop_pointer = head_Node;
+    while_loop_pointer = &head_Node;
     position = 0;
     goal_position = 2;
     while (while_loop_pointer != null) {
@@ -126,9 +121,8 @@ pub fn main() !void {
     while_loop_pointer.?.next_node_pointer = deleted_Node.?.next_node_pointer;
 
     //Print linked list
-    while_loop_pointer = head_Node;
+    while_loop_pointer = &head_Node;
     position = 0;
-    debug_print("\n\n\n", .{});
     while (while_loop_pointer != null) {
         position += 1;
         debug_print("Element {d}: {d}\t\t", .{ position, while_loop_pointer.?.value });
@@ -141,54 +135,36 @@ pub fn main() !void {
     //need to print out linkedlist addresses
 
     //ORDER NODES
-    //I don't think I have to account for the head node case untilI've re referenced everything else, as I have a placeholder
     //using bubble sort for simplicity
     //Pseudo Code
+    while_loop_pointer = &head_Node;
+    //    debug_print("\nCurrent value is {d}\t\t", .{while_loop_pointer.?.value});
+    //    debug_print("Next value is {d}\n", .{while_loop_pointer.?.next_node_pointer.?.value});
 
-    // //BELOW ORIGINAL DECLERATIONS/ASSIGNMENTS
-    // var temp_Head_Node: ?*Node = undefined;
-    // var placeholder_Node: ?*Node = undefined;
-    // var second_placeholder_Node: ?*Node = undefined;
-
-    // //while (while_loop_pointer != null) {  //might need to use "while_loop_pointer.?.next_node_pointer" instead to avoid null, same thing happens in bubble sort file
-    // //if (while_loop_pointer.?.value > while_loop_pointer.?.next_node_pointer.?.value)
-
-    // temp_Head_Node = head_Node; //might not be needed
-    // second_placeholder_Node = head_Node.?.next_node_pointer;
-    // placeholder_Node = head_Node.?.next_node_pointer.?.next_node_pointer;
-    // //ABOVE ORIGINAL DECLERATIONS/ASSIGNMENTS
-
-    //    var temp_Head_Node: ?*Node = head_Node;   //might not be needed
-    var second_placeholder_Node: ?*Node = head_Node.?.next_node_pointer;
-    const placeholder_Node: ?*Node = head_Node.?.next_node_pointer.?.next_node_pointer;
-
+    //var placeholder_Node: ?*Node = undefined;  compiles but might need it to be of type Node intead of ?*Node
+    var placeholder_Node: Node = undefined;
+    //var subsequent_Node: ?*Node = undefined;
     //while (while_loop_pointer != null) {  //might need to use "while_loop_pointer.?.next_node_pointer" instead to avoid null, same thing happens in bubble sort file
     //if (while_loop_pointer.?.value > while_loop_pointer.?.next_node_pointer.?.value)
 
-    // //BELOW ORIGINAL ORDER
-    // temp_Head_Node = head_Node;
-    // placeholder_Node = head_Node.?.next_node_pointer.?.next_node_pointer;
-    // second_placeholder_Node = head_Node.?.next_node_pointer;
-    // //ABOVE ORIGINAL ORDER
+    while_loop_pointer = &head_Node;
+    debug_print("\nCurrent value is {d}\t\t", .{while_loop_pointer.?.value});
+    debug_print("Current Address is {*}\n", .{while_loop_pointer});
 
-    head_Node.?.next_node_pointer = placeholder_Node;
-    second_placeholder_Node.?.next_node_pointer = head_Node;
-    head_Node = second_placeholder_Node;
+    debug_print("Next value is {d}\t\t\t", .{while_loop_pointer.?.next_node_pointer.?.value});
+    debug_print("Next Address is\t {*}\n\n", .{while_loop_pointer.?.next_node_pointer});
 
-    head_Node.?.next_node_pointer = placeholder_Node;
-    second_placeholder_Node.?.next_node_pointer = head_Node;
-    head_Node = second_placeholder_Node;
+    // placeholder_Node = &head_Node;
+    // debug_print("placeholder_Node value is {d}\t\t", .{placeholder_Node.?.value});
+    // debug_print("placeholder_Node Address is {*}\n", .{placeholder_Node});
+    placeholder_Node = head_Node;
+    debug_print("placeholder_Node value is {d}\t\t", .{placeholder_Node.value});
+    debug_print("placeholder_Node Address is {*}\n", .{&placeholder_Node});
 
-    while_loop_pointer = head_Node;
-    position = 0;
-    debug_print("\n\n", .{});
-    while (while_loop_pointer != null) {
-        position += 1;
-        debug_print("Element {d}: {d}\t\t", .{ position, while_loop_pointer.?.value });
-        debug_print("Address {d}: {*}\n", .{ position, while_loop_pointer });
-        while_loop_pointer = while_loop_pointer.?.next_node_pointer;
-    }
-    debug_print("\n\n\n", .{});
+    //head_Node = while_loop_pointer.?.*;  //this compiles
+    head_Node = while_loop_pointer.?.*.next_node_pointer.?.*;
+    debug_print("head_Node value is {d}\t\t", .{head_Node.value});
+    debug_print("head_Node Address is {*}\n", .{&head_Node});
 
     //BELOW: WHOLE BLOCK IS COMMENTED
     // position = 0;
@@ -215,6 +191,25 @@ pub fn main() !void {
     //     debug_print("Current Address is {*}\n", .{while_loop_pointer});
     //     debug_print("Next value is {d}\t\t\t", .{while_loop_pointer.?.next_node_pointer.?.value});
     //     debug_print("Next Address is\t {*}\n\n", .{while_loop_pointer.?.next_node_pointer});
+    // }
+
+    // while_loop_pointer = &head_Node;
+    // position = 0;
+    // debug_print("\nCurrent value is {d}\t\t", .{while_loop_pointer.?.value});
+    // debug_print("Current Address is {*}\n", .{while_loop_pointer});
+
+    // debug_print("Next value is {d}\t\t\t", .{while_loop_pointer.?.next_node_pointer.?.value});
+    // debug_print("Next Address is\t {*}\n", .{while_loop_pointer.?.next_node_pointer});
+    //ABOVE: WHOLE BLOCK IS COMMENTED
+
+    //Print linked list
+    // while_loop_pointer = &head_Node;
+    // position = 0;
+    // while (while_loop_pointer != null) {
+    //     position += 1;
+    //     debug_print("Element {d}: {d}\t\t", .{ position, while_loop_pointer.?.value });
+    //     debug_print("Address {d}: {*}\n", .{ position, while_loop_pointer });
+    //     while_loop_pointer = while_loop_pointer.?.next_node_pointer;
     // }
 
     //INSERT NODE BY VALUE
