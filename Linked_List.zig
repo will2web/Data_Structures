@@ -145,39 +145,10 @@ pub fn main() !void {
     //using bubble sort for simplicity
     //Pseudo Code
 
-    // //BELOW ORIGINAL DECLERATIONS/ASSIGNMENTS
-    // var temp_Head_Node: ?*Node = undefined;
-    // var placeholder_Node: ?*Node = undefined;
-    // var second_placeholder_Node: ?*Node = undefined;
-
-    // //while (while_loop_pointer != null) {  //might need to use "while_loop_pointer.?.next_node_pointer" instead to avoid null, same thing happens in bubble sort file
-    // //if (while_loop_pointer.?.value > while_loop_pointer.?.next_node_pointer.?.value)
-
-    // temp_Head_Node = head_Node; //might not be needed
-    // second_placeholder_Node = head_Node.?.next_node_pointer;
-    // placeholder_Node = head_Node.?.next_node_pointer.?.next_node_pointer;
-    // //ABOVE ORIGINAL DECLERATIONS/ASSIGNMENTS
-
-    //    var temp_Head_Node: ?*Node = head_Node;   //might not be needed
-    var second_placeholder_Node: ?*Node = head_Node.?.next_node_pointer;
-    const placeholder_Node: ?*Node = head_Node.?.next_node_pointer.?.next_node_pointer;
-
-    //while (while_loop_pointer != null) {  //might need to use "while_loop_pointer.?.next_node_pointer" instead to avoid null, same thing happens in bubble sort file
-    //if (while_loop_pointer.?.value > while_loop_pointer.?.next_node_pointer.?.value)
-
-    // //BELOW ORIGINAL ORDER
-    // temp_Head_Node = head_Node;
-    // placeholder_Node = head_Node.?.next_node_pointer.?.next_node_pointer;
-    // second_placeholder_Node = head_Node.?.next_node_pointer;
-    // //ABOVE ORIGINAL ORDER
-
-    head_Node.?.next_node_pointer = placeholder_Node;
-    second_placeholder_Node.?.next_node_pointer = head_Node;
-    head_Node = second_placeholder_Node;
-
-    head_Node.?.next_node_pointer = placeholder_Node;
-    second_placeholder_Node.?.next_node_pointer = head_Node;
-    head_Node = second_placeholder_Node;
+    const place_Holder_Node: ?*Node = head_Node.?.next_node_pointer;
+    head_Node.?.next_node_pointer = place_Holder_Node.?.next_node_pointer;
+    place_Holder_Node.?.next_node_pointer = head_Node;
+    head_Node = place_Holder_Node;
 
     while_loop_pointer = head_Node;
     position = 0;
